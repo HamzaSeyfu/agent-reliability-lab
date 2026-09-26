@@ -6,7 +6,7 @@
 <meta name="description" content="Interactive AI agent reliability benchmark: baseline vs human-review safety gate.">
 <title>Agent Reliability Lab</title>
 <style>
-:root{font-family:Inter,ui-sans-serif,system-ui,sans-serif;background:#071019;color:#edf5fb}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 10% 0,#173a53 0,#071019 38%);min-height:100vh}.wrap{max-width:1180px;margin:auto;padding:50px 24px 70px}.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#72d5ff;font-weight:800}h1{font-size:50px;line-height:1.02;margin:10px 0 12px}p{color:#a8bdcb;line-height:1.55}.hero{display:flex;justify-content:space-between;gap:28px;align-items:end}.badge{border:1px solid #2b607c;background:#0d2130;border-radius:999px;padding:9px 13px;color:#bfeaff;font-size:13px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:28px 0}.card{background:rgba(8,26,39,.9);border:1px solid #1e4359;border-radius:18px;padding:19px;box-shadow:0 18px 60px rgba(0,0,0,.22)}.card strong{font-size:30px;display:block;margin:5px 0}.card span{font-size:12px;color:#8da7b7}.good{color:#70e0af}.bad{color:#ff8f94}.panel{background:rgba(8,25,38,.88);border:1px solid #1e4359;border-radius:18px;padding:22px;margin-top:16px}.comparison{display:grid;grid-template-columns:1fr 1fr;gap:18px}.bar{height:9px;background:#102b3d;border-radius:999px;overflow:hidden;margin-top:9px}.fill{height:100%;background:#5dcdf8}.fill.goodfill{background:#66ddb1}select{background:#091d2b;color:#eaf5fb;border:1px solid #2b5a73;border-radius:10px;padding:10px 12px;width:100%}pre{white-space:pre-wrap;background:#06131d;border:1px solid #17394d;border-radius:12px;padding:16px;color:#cce6f5;min-height:180px}.note{font-size:12px;color:#7994a5;margin-top:18px}.links a{color:#74d4ff;margin-right:18px;text-decoration:none}.links a:hover{text-decoration:underline}@media(max-width:820px){h1{font-size:39px}.grid{grid-template-columns:1fr 1fr}.comparison{grid-template-columns:1fr}.hero{display:block}}@media(max-width:520px){.grid{grid-template-columns:1fr}}
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;background:#071019;color:#edf5fb;--panel:#0a1b29;--line:#1e4359;--muted:#9db2c0;--cyan:#70d5ff;--green:#72e0b0;--red:#ff8f94;--amber:#ffd27a}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 10% 0,#173a53 0,#071019 38%);min-height:100vh}.wrap{max-width:1180px;margin:auto;padding:48px 24px 72px}.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);font-weight:800}h1{font-size:50px;line-height:1.02;margin:10px 0 12px}h2{margin-top:0}h3{margin-bottom:8px}p{color:var(--muted);line-height:1.58}.hero{display:flex;justify-content:space-between;gap:28px;align-items:end}.badge{border:1px solid #2b607c;background:#0d2130;border-radius:999px;padding:9px 13px;color:#bfeaff;font-size:13px;font-weight:700}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:28px 0}.card,.panel{background:rgba(8,26,39,.92);border:1px solid var(--line);box-shadow:0 18px 60px rgba(0,0,0,.22)}.card{border-radius:18px;padding:19px}.card strong{font-size:30px;display:block;margin:5px 0}.card span{font-size:12px;color:#8da7b7}.panel{border-radius:18px;padding:22px;margin-top:16px}.good{color:var(--green)}.bad{color:var(--red)}.amber{color:var(--amber)}.comparison{display:grid;grid-template-columns:1fr 1fr;gap:18px}.bar{height:9px;background:#102b3d;border-radius:999px;overflow:hidden;margin-top:9px}.fill{height:100%;background:#5dcdf8}.fill.goodfill{background:#66ddb1}.links a{color:var(--cyan);margin-right:18px;text-decoration:none}.links a:hover{text-decoration:underline}select,input,button{font:inherit}select,.field-input{background:#091d2b;color:#eaf5fb;border:1px solid #2b5a73;border-radius:10px;padding:10px 12px}select{width:100%}button{border:0;border-radius:11px;padding:11px 15px;background:#5fd0ff;color:#06131d;font-weight:800;cursor:pointer}button:hover{filter:brightness(1.08)}.replay-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:18px}.decision-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}.decision{border:1px solid var(--line);border-radius:14px;padding:15px;background:#071722}.decision strong{font-size:18px}.trace{display:grid;gap:10px}.trace-step{border-left:3px solid #2f6f91;background:#081925;border-radius:0 12px 12px 0;padding:12px 14px}.trace-step b{display:block;margin-bottom:4px}.trace-step span{font-size:13px;color:#9fb7c7}.builder{display:grid;grid-template-columns:1.4fr .6fr;gap:20px}.evidence-table{width:100%;border-collapse:collapse}.evidence-table th,.evidence-table td{text-align:left;padding:10px 8px;border-bottom:1px solid #18394d;font-size:13px}.evidence-table th{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#7bd3f8}.evidence-table input[type="range"]{width:150px}.mini{font-size:12px;color:#8aa4b4}.output{background:#06131d;border:1px solid #17394d;border-radius:12px;padding:16px;color:#cce6f5;min-height:190px;white-space:pre-wrap}.pill{display:inline-block;border:1px solid #285069;border-radius:999px;padding:5px 9px;font-size:12px;margin:3px 4px 3px 0}.pill.good{border-color:#2b7055}.pill.bad{border-color:#7c3e45}.note{font-size:12px;color:#7994a5;margin-top:18px}.section-kicker{font-size:11px;color:#72d5ff;text-transform:uppercase;letter-spacing:.12em;font-weight:800;margin-bottom:7px}@media(max-width:900px){.metrics{grid-template-columns:1fr 1fr}.comparison,.replay-grid,.builder{grid-template-columns:1fr}.hero{display:block}}@media(max-width:520px){h1{font-size:39px}.metrics,.decision-grid{grid-template-columns:1fr}.evidence-table input[type="range"]{width:105px}}
 </style>
 </head>
 <body>
@@ -16,12 +16,12 @@
       <div class="eyebrow">AI evaluation · selective automation · regression engineering</div>
       <h1>Agent Reliability Lab</h1>
       <p>Can a high-confidence AI workflow still be unsafe to automate? Compare a score-only baseline with a deterministic human-review gate on adversarial evidence.</p>
-      <p class="links"><a href="https://github.com/HamzaSeyfu/agent-reliability-lab">View source</a><a href="https://github.com/HamzaSeyfu/sample-healthcare-agents/pull/1">Companion contribution</a></p>
+      <p class="links"><a href="https://github.com/HamzaSeyfu/agent-reliability-lab">View source</a><a href="https://github.com/HamzaSeyfu/sample-healthcare-agents/pull/1">Companion AWS contribution</a></p>
     </div>
     <div class="badge" id="gateBadge">Loading benchmark…</div>
   </div>
 
-  <div class="grid">
+  <div class="metrics">
     <div class="card"><span>Candidate accuracy</span><strong class="good" id="accuracy">–</strong></div>
     <div class="card"><span>Human-review recall</span><strong class="good" id="recall">–</strong></div>
     <div class="card"><span>Unsafe auto-decisions</span><strong class="good" id="unsafe">–</strong></div>
@@ -29,6 +29,7 @@
   </div>
 
   <section class="panel">
+    <div class="section-kicker">A/B benchmark</div>
     <h2>Baseline vs candidate</h2>
     <div class="comparison">
       <div>
@@ -49,62 +50,157 @@
   </section>
 
   <section class="panel">
+    <div class="section-kicker">Deterministic replay</div>
     <h2>Replay a failure mode</h2>
-    <select id="caseSelect"></select>
-    <pre id="caseOutput"></pre>
+    <div class="replay-grid">
+      <div>
+        <select id="caseSelect"></select>
+        <div class="decision-grid">
+          <div class="decision"><span class="mini">Score-only baseline</span><strong id="replayBaseline">–</strong></div>
+          <div class="decision"><span class="mini">Reliability gate</span><strong id="replayCandidate">–</strong></div>
+        </div>
+        <div style="margin-top:12px" id="replayMeta"></div>
+      </div>
+      <div>
+        <div class="trace" id="trace"></div>
+      </div>
+    </div>
   </section>
 
   <section class="panel">
-    <h2>The engineering point</h2>
-    <p>The interesting failures are the ones where the aggregate score remains high. A conflicting payer policy or prompt-injection signal can coexist with otherwise excellent evidence. A score-only system can therefore look confident while making the wrong automation decision.</p>
+    <div class="section-kicker">Interactive sandbox</div>
+    <h2>Build your own evidence case</h2>
+    <p>Change evidence presence, confidence, corroboration and a critical flag. The browser executes the same scoring policy used by the benchmark so you can see why aggregate confidence alone is insufficient.</p>
+    <div class="builder">
+      <div>
+        <table class="evidence-table">
+          <thead><tr><th>Field</th><th>Present</th><th>Confidence</th><th>Sources</th></tr></thead>
+          <tbody id="evidenceRows"></tbody>
+        </table>
+        <div style="margin-top:14px">
+          <label class="mini">Critical reliability flag</label>
+          <select id="flagSelect">
+            <option value="">None</option>
+            <option value="conflicting_policy">conflicting_policy</option>
+            <option value="conflicting_identity">conflicting_identity</option>
+            <option value="prompt_injection_detected">prompt_injection_detected</option>
+            <option value="missing_coverage">missing_coverage</option>
+            <option value="missing_policy">missing_policy</option>
+          </select>
+        </div>
+        <div style="margin-top:14px"><button id="runCase">Evaluate case</button></div>
+      </div>
+      <div class="output" id="builderOutput"></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="section-kicker">Engineering principle</div>
+    <h2>High score ≠ safe automation</h2>
+    <p>The interesting failures are the ones where aggregate confidence remains high. A conflicting payer policy or prompt-injection signal can coexist with otherwise excellent evidence. A score-only system can therefore look confident while making the wrong automation decision.</p>
     <p>This public demo uses deterministic replay and synthetic inputs so every reviewer and CI run sees the same behavior without model keys or sensitive data.</p>
   </section>
 
   <div class="note">Synthetic data only · software-engineering demonstration · not clinical decision support.</div>
 </div>
 <script>
-const pct = x => (x * 100).toFixed(2) + '%';
-fetch('./results.json').then(r => r.json()).then(d => {
-  const b = d.baseline, c = d.candidate;
-  document.getElementById('gateBadge').textContent = d.quality_gate.pass ? 'QUALITY GATE · PASS' : 'QUALITY GATE · FAIL';
-  document.getElementById('accuracy').textContent = pct(c.accuracy);
-  document.getElementById('recall').textContent = pct(c.human_review_recall);
-  document.getElementById('unsafe').textContent = c.unsafe_auto_decisions;
-  document.getElementById('cases').textContent = c.cases;
-  [['bAcc', b.accuracy], ['bRecall', b.human_review_recall], ['cAcc', c.accuracy], ['cRecall', c.human_review_recall]].forEach(pair => {
-    document.getElementById(pair[0]).textContent = pct(pair[1]);
-  });
-  document.getElementById('bAccBar').style.width = pct(b.accuracy);
-  document.getElementById('bRecallBar').style.width = pct(b.human_review_recall);
-  document.getElementById('cAccBar').style.width = pct(c.accuracy);
-  document.getElementById('cRecallBar').style.width = pct(c.human_review_recall);
-  document.getElementById('bUnsafe').textContent = b.unsafe_auto_decisions;
-  document.getElementById('cUnsafe').textContent = c.unsafe_auto_decisions;
-  const select = document.getElementById('caseSelect');
-  const output = document.getElementById('caseOutput');
-  d.featured_cases.forEach((item, index) => {
-    const option = document.createElement('option');
-    option.value = index;
-    option.textContent = item.id + ' · ' + item.category;
+const pct=x=>(x*100).toFixed(2)+'%';
+const fields=['diagnosis','procedure_code','coverage','payer_policy'];
+const criticalFlags=new Set(['missing_coverage','missing_policy','missing_patient','conflicting_identity','conflicting_policy','prompt_injection_detected']);
+const rows=document.getElementById('evidenceRows');
+
+fields.forEach((field,i)=>{
+  const tr=document.createElement('tr');
+  tr.innerHTML='<td>'+field+'</td><td><input type="checkbox" data-kind="present" data-field="'+field+'" checked></td><td><input type="range" min="0" max="1" step="0.01" value="0.96" data-kind="confidence" data-field="'+field+'"> <span id="cv-'+i+'">0.96</span></td><td><input class="field-input" style="width:68px" type="number" min="0" max="9" value="2" data-kind="sources" data-field="'+field+'"></td>';
+  rows.appendChild(tr);
+  const range=tr.querySelector('input[type=range]');
+  range.oninput=()=>document.getElementById('cv-'+i).textContent=Number(range.value).toFixed(2);
+});
+
+function collectEvidence(){
+  return fields.map(field=>({
+    field,
+    present:document.querySelector('[data-kind=present][data-field="'+field+'"]').checked,
+    confidence:Number(document.querySelector('[data-kind=confidence][data-field="'+field+'"]').value),
+    source_count:Number(document.querySelector('[data-kind=sources][data-field="'+field+'"]').value)
+  }));
+}
+function scoreEvidence(evidence){
+  const present=evidence.filter(x=>x.present);
+  const completeness=present.length/fields.length;
+  const meanConfidence=present.length?present.reduce((s,x)=>s+x.confidence,0)/present.length:0;
+  const meanCorroboration=present.length?present.reduce((s,x)=>s+(x.source_count>=2?1:.5),0)/present.length:0;
+  return .5*completeness+.35*meanConfidence+.15*meanCorroboration;
+}
+function evaluateInteractive(){
+  const evidence=collectEvidence();
+  const flag=document.getElementById('flagSelect').value;
+  const missing=evidence.filter(x=>!x.present).map(x=>x.field);
+  const low=evidence.filter(x=>x.present&&x.confidence<.70).map(x=>x.field);
+  const duplicate=[]; // browser builder keeps one normalized item per field
+  const score=scoreEvidence(evidence);
+  const baselineSafe=missing.length===0&&score>=.80;
+  const reasons=[];
+  if(missing.length) reasons.push('Critical evidence missing: '+missing.join(', '));
+  if(flag&&criticalFlags.has(flag)) reasons.push('Critical reliability flag: '+flag);
+  if(low.length) reasons.push('Low-confidence critical evidence: '+low.join(', '));
+  if(score<.80) reasons.push('Reliability score below 0.80');
+  const candidateSafe=reasons.length===0;
+  if(candidateSafe) reasons.push('Evidence quality is sufficient for automated decisioning');
+  const danger=!candidateSafe&&baselineSafe;
+  document.getElementById('builderOutput').innerHTML=
+    '<span class="pill '+(baselineSafe?'amber':'good')+'">BASELINE · '+(baselineSafe?'AUTO DECIDE':'HUMAN REVIEW')+'</span> '+
+    '<span class="pill '+(candidateSafe?'good':'bad')+'">CANDIDATE · '+(candidateSafe?'AUTO DECIDE':'HUMAN REVIEW')+'</span>\n\n'+
+    'Reliability score: '+score.toFixed(4)+'\n'+
+    'Completeness: '+(evidence.filter(x=>x.present).length)+'/'+fields.length+'\n'+
+    (flag?'Critical flag: '+flag+'\n':'')+
+    '\n'+reasons.join('\n')+
+    (danger?'\n\n⚠ Score-only baseline would automate this unsafe case.':'');
+}
+document.getElementById('runCase').onclick=evaluateInteractive;
+evaluateInteractive();
+
+fetch('./results.json').then(r=>r.json()).then(d=>{
+  const b=d.baseline,c=d.candidate;
+  document.getElementById('gateBadge').textContent=d.quality_gate.pass?'QUALITY GATE · PASS':'QUALITY GATE · FAIL';
+  document.getElementById('accuracy').textContent=pct(c.accuracy);
+  document.getElementById('recall').textContent=pct(c.human_review_recall);
+  document.getElementById('unsafe').textContent=c.unsafe_auto_decisions;
+  document.getElementById('cases').textContent=c.cases;
+  [['bAcc',b.accuracy],['bRecall',b.human_review_recall],['cAcc',c.accuracy],['cRecall',c.human_review_recall]].forEach(([id,v])=>document.getElementById(id).textContent=pct(v));
+  document.getElementById('bAccBar').style.width=pct(b.accuracy);
+  document.getElementById('bRecallBar').style.width=pct(b.human_review_recall);
+  document.getElementById('cAccBar').style.width=pct(c.accuracy);
+  document.getElementById('cRecallBar').style.width=pct(c.human_review_recall);
+  document.getElementById('bUnsafe').textContent=b.unsafe_auto_decisions;
+  document.getElementById('cUnsafe').textContent=c.unsafe_auto_decisions;
+
+  const select=document.getElementById('caseSelect');
+  d.featured_cases.forEach((item,index)=>{
+    const option=document.createElement('option');
+    option.value=index;
+    option.textContent=item.id+' · '+item.category;
     select.appendChild(option);
   });
-  function render() {
-    const item = d.featured_cases[Number(select.value || 0)];
-    output.textContent = [
-      'SCENARIO        ' + item.id,
-      'EXPECTED        ' + item.expected,
-      'BASELINE        ' + item.baseline,
-      'CANDIDATE       ' + item.candidate,
-      'RELIABILITY     ' + item.candidate_score,
-      '',
-      'WHY CANDIDATE STOPPED / PROCEEDED',
-      item.reason
-    ].join('\n');
+  function renderReplay(){
+    const item=d.featured_cases[Number(select.value||0)];
+    const bEl=document.getElementById('replayBaseline'),cEl=document.getElementById('replayCandidate');
+    bEl.textContent=item.baseline.replace('_',' ').toUpperCase();
+    cEl.textContent=item.candidate.replace('_',' ').toUpperCase();
+    bEl.className=item.baseline==='auto_decide'&&item.expected==='human_review'?'bad':'good';
+    cEl.className=item.candidate===item.expected?'good':'bad';
+    document.getElementById('replayMeta').innerHTML='<span class="pill">Expected · '+item.expected+'</span><span class="pill">Score · '+item.candidate_score+'</span><p>'+item.reason+'</p>';
+    const trace=[
+      ['Evidence ingestion','Synthetic evidence loaded and normalized for '+item.id+'.'],
+      ['Reliability policy','Score '+item.candidate_score+' evaluated with critical hard stops.'],
+      ['Decision',item.candidate.replace('_',' ').toUpperCase()+': '+item.reason]
+    ];
+    document.getElementById('trace').innerHTML=trace.map((x,i)=>'<div class="trace-step"><b>0'+(i+1)+' · '+x[0]+'</b><span>'+x[1]+'</span></div>').join('');
   }
-  select.onchange = render;
-  render();
-}).catch(error => {
-  document.getElementById('gateBadge').textContent = 'RESULT LOAD ERROR';
+  select.onchange=renderReplay;
+  renderReplay();
+}).catch(error=>{
+  document.getElementById('gateBadge').textContent='RESULT LOAD ERROR';
   console.error(error);
 });
 </script>
