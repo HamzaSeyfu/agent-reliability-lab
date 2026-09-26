@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
+description: Agent Reliability Lab candidate regression suite
+
+prompts:
+  - "{{scenario_id}}"
+
+providers:
+  - id: file://providers/prior_auth_provider.py
+    label: reliability-gate-candidate
+    config:
+      mode: candidate
+
+tests:
+  - file://scenarios/promptfoo_cases.yaml
+
+defaultTest:
+  assert:
+    - type: is-json
+    - type: python
+      value: file://assertions/decision_assert.py:check_expected_decision

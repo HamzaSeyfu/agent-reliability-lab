@@ -1,0 +1,7 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/dashboard/index.html" },
+    { "source": "/results.json", "destination": "/dashboard/results.json" }
+  ],
+  "cleanUrls": true
+}
